@@ -5,4 +5,4 @@ composer.lock
 error.log
 config.php
 storage/db
-storage/fi
+storage/files

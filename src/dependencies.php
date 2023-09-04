@@ -29,7 +29,7 @@ $injector->delegate(
 $templateDirectory = $injector->make(\App\Rendering\TemplateDirectory::class, [':rootDirectory' => ROOT_DIR]);
 $injector->delegate(
     \App\Rendering\TemplateRenderer::class,
-    function () use ($injector, $templateDirectory): \App\Rendering\TemplateRenderer {
+    function () use ($templateDirectory): \App\Rendering\TemplateRenderer {
         $factory = new \App\Rendering\TwigTemplateRendererFactory($templateDirectory);
         return $factory->create();
     }

@@ -5,4 +5,9 @@ return array(
         '/',
         'App\Page\Controller#home'
     ),
+//    array(
+//        'POST',
+//        '/',
+//        'App\Page\Controller#sing_in'
+//    ),
 );
