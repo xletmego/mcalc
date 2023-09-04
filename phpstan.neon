@@ -1,0 +1,13 @@
+parameters:
+	level: 5
+	bootstrapFiles:
+	    - vendor/autoload.php
+
+	ignoreErrors:
+
+	scanDirectories:
+		- src
+		- migrations
+		- bin
+	paths:
+		- src
