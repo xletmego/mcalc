@@ -65,8 +65,24 @@ final class Controller
 
     public function home(Request $request): Response
     {
-        $a = $this->user_table->getList();
         return new Response($this->renderer->render('Home.twig',['users' => $this->user_table->getList()]));
+    }
+
+    public function api(Request $request, $vars){
+
+        $respArray = [
+            'found' => 0,
+            'param1' => 0,
+            'param2' => 0,
+        ];
+        $data = $this->user_table->find($vars['login'] ?? '', $vars['password'] ?? '');
+        if(!empty($data['id'])){
+            $respArray['found'] = 1;
+            $respArray['param1'] = 1;
+            $respArray['param2'] = 2;
+
+        }
+        return new Response(json_encode($respArray));
     }
 
     /**@used at route

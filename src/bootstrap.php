@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Page\Controller;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -24,26 +25,26 @@ $session = $injector->make(Symfony\Component\HttpFoundation\Session\Session::cla
 $session->start();
 $request->setSession($session);
 
+$dispatcher = simpleDispatcher(
+    function (RouteCollector $r) {
+        $routes = include(ROOT_DIR . '/src/routes.php');
+        foreach ($routes as $route) {
+            $r->addRoute(...$route);
+        }
+    }
+);
 
+$routeInfo = $dispatcher->dispatch(
+    $request->getMethod(),
+    $request->getPathInfo()
+);
 
 
 //single controller
-$controller = $injector->make(\App\Page\Controller::class);
+$controller = $injector->make(Controller::class);
 
-if($controller->isAuth($request->getSession())){
-    $dispatcher = simpleDispatcher(
-        function (RouteCollector $r) {
-            $routes = include(ROOT_DIR . '/src/routes.php');
-            foreach ($routes as $route) {
-                $r->addRoute(...$route);
-            }
-        }
-    );
+if($controller->isAuth($request->getSession()) || $routeInfo[1] === 'App\Page\Controller#api'){
 
-    $routeInfo = $dispatcher->dispatch(
-        $request->getMethod(),
-        $request->getPathInfo()
-    );
     switch ($routeInfo[0]) {
         case Dispatcher::NOT_FOUND:
             $response = $controller->showErrorPage('404 Not found', 404);

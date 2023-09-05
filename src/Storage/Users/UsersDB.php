@@ -42,6 +42,27 @@ class UsersDB
         return is_array($result) ? $result : array();
     }
 
+    public function find(string $login, string $password): array
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $result = $qb->select(array_keys(self::FIELDS))
+            ->from(self::TABLE_NAME)
+            ->where('login = :login')
+            ->andWhere('password = :password')
+//            ->andWhere([
+//
+//                'password' => ':password'
+//            ])
+            ->setParameters([
+                ':login' => $login,
+                ':password' => $password
+            ])
+            ->execute()
+            ->fetchAssociative();
+
+        return is_array($result) ? $result : array();
+    }
+
     /**
      * @throws Exception
      * @throws \Doctrine\DBAL\Exception
