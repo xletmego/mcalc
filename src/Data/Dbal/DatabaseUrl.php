@@ -4,7 +4,7 @@ namespace App\Data\Dbal;
 
 final class DatabaseUrl
 {
-    private string $url;
+    private $url;
 
     public function __construct(string $url)
     {

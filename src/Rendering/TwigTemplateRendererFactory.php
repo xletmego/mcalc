@@ -7,7 +7,7 @@ use Twig\Loader\FilesystemLoader;
 
 final class TwigTemplateRendererFactory
 {
-    private TemplateDirectory $templateDirectory;
+    private $templateDirectory;
 
     public function __construct(TemplateDirectory $templateDirectory)
     {

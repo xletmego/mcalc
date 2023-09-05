@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Types;
 
 final class Migration202309041741
 {
-    private Connection $connection;
+    private $connection;
 
     public function __construct(Connection $connection)
     {
@@ -19,7 +19,7 @@ final class Migration202309041741
     {
         $schema = new Schema();
 
-        $this->createPdf_files_table($schema);
+        $this->createTable($schema);
         $queries = $schema->toSql($this->connection->getDatabasePlatform());
 
         foreach ($queries as $query) {
@@ -27,15 +27,21 @@ final class Migration202309041741
         }
     }
 
-    private function createPdf_files_table(Schema $schema):void
+    private function createTable(Schema $schema):void
     {
         $table = $schema->createTable('users');
 
-        $table->addColumn('id', Types::INTEGER, array(
+        $table->addColumn('id', Types::STRING, array(
+            "length" => 34,
             'notnull' => true,
-            'autoincrement' => true,
         ));
         $table->setPrimaryKey(array('id'));
+
+        $table->addColumn('name', Types::STRING, array(
+            "length" => 255,
+            'default' => '',
+            'notnull' => false,
+        ));
 
         $table->addColumn('login', Types::STRING, array(
             "length" => 255,
@@ -49,9 +55,14 @@ final class Migration202309041741
             'notnull' => false,
         ));
 
-        $table->addColumn('vars', Types::STRING, array(
+        $table->addColumn('param1', Types::INTEGER, array(
             "length" => 256,
-            'default' => '',
+            'default' => 0,
+            'notnull' => false,
+        ));
+        $table->addColumn('param2', Types::INTEGER, array(
+            "length" => 256,
+            'default' => 0,
             'notnull' => false,
         ));
     }

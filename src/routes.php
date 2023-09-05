@@ -5,9 +5,34 @@ return array(
         '/',
         'App\Page\Controller#home'
     ),
-//    array(
-//        'POST',
-//        '/',
-//        'App\Page\Controller#sing_in'
-//    ),
+    array(
+        'GET',
+        '/home',
+        'App\Page\Controller#home'
+    ),
+    array(
+        'GET',
+        '/logout',
+        'App\Page\Controller#logout'
+    ),
+    array(
+        'GET',
+        '/create_user',
+        'App\Page\Controller#edit_user'
+    ),
+    array(
+        'GET',
+        '/edit_user/{id}',
+        'App\Page\Controller#edit_user'
+    ),
+    array(
+        'GET',
+        '/delete_user/{id}',
+        'App\Page\Controller#delete_user'
+    ),
+    array(
+        'POST',
+        '/save_user',
+        'App\Page\Controller#save_user'
+    ),
 );

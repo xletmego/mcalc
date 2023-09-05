@@ -6,7 +6,7 @@ use Twig\Environment;
 
 final class TwigTemplateRenderer implements TemplateRenderer
 {
-    private Environment $twigEnvironment;
+    private $twigEnvironment;
 
     public function __construct(Environment $twigEnvironment)
     {

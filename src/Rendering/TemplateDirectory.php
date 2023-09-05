@@ -4,7 +4,7 @@ namespace App\Rendering;
 
 final class TemplateDirectory
 {
-    private string $templateDirectory;
+    private $templateDirectory;
 
     public function __construct(string $rootDirectory)
     {

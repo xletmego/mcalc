@@ -1,5 +1,9 @@
 <?php declare(strict_types=1);
 
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
+use function FastRoute\simpleDispatcher;
+
 const ROOT_DIR = __DIR__ . '/../';
 
 require ROOT_DIR . '/vendor/autoload.php';
@@ -27,8 +31,8 @@ $request->setSession($session);
 $controller = $injector->make(\App\Page\Controller::class);
 
 if($controller->isAuth($request->getSession())){
-    $dispatcher = \FastRoute\simpleDispatcher(
-        function (\FastRoute\RouteCollector $r) {
+    $dispatcher = simpleDispatcher(
+        function (RouteCollector $r) {
             $routes = include(ROOT_DIR . '/src/routes.php');
             foreach ($routes as $route) {
                 $r->addRoute(...$route);
@@ -41,13 +45,13 @@ if($controller->isAuth($request->getSession())){
         $request->getPathInfo()
     );
     switch ($routeInfo[0]) {
-        case \FastRoute\Dispatcher::NOT_FOUND:
+        case Dispatcher::NOT_FOUND:
             $response = $controller->showErrorPage('404 Not found', 404);
             break;
-        case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+        case Dispatcher::METHOD_NOT_ALLOWED:
             $response = $controller->showErrorPage('405 Method not allowed', 405);
             break;
-        case \FastRoute\Dispatcher::FOUND:
+        case Dispatcher::FOUND:
             [$controllerName, $method] = explode('#', $routeInfo[1]);
             $vars = $routeInfo[2];
             $controller = $injector->make($controllerName);

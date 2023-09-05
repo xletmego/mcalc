@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Edit</title>
+
+    {{ block("styles", "styles.twig") }}
+
+</head>
+<body>
+
+    {{ block("navbar", "navbar.twig") }}
+
+    <div class="container-fluid">
+
+        <form method="post" action="/save_user" autocomplete="off">
+            <div>
+                <input type="hidden" id="id" name="id" value="{{ user.id }}">
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="name">ФИО:</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="login">Логин:</label>
+                        <input type="text" class="form-control" id="login" name="login" value="{{ user.login }}">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="text" class="form-control" id="password" name="password" value="{{ user.password }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="param1">Параметр1:</label>
+                        <input type="number" class="form-control" id="param1" name="param1" value="{{ user.param1 }}">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="param2">Параметр2:</label>
+                        <input type="number" class="form-control" id="param2" name="param2" value="{{ user.param2 }}">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+
+    </div>
+</body>
+</html>

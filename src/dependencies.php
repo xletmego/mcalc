@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Storage\Users\UsersDB;
 use Auryn\Injector;
 
 use App\Data\Dbal\DatabaseUrl;
@@ -34,6 +35,16 @@ $injector->delegate(
         return $factory->create();
     }
 );
+
+$injector->define(UsersDB::class, array(
+    'connection' => Connection::class,
+));
+
+
+$injector->define(App\Page\Controller::class, array(
+    'user_table' => UsersDB::class,
+));
+
 
 
 return $injector;

@@ -5,7 +5,7 @@ namespace App;
 class Configuration
 {
 
-    private array $config;
+    private $config;
 
     public function __construct(string $path)
     {

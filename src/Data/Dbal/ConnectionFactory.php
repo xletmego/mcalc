@@ -8,7 +8,7 @@ use Doctrine\DBAL\DriverManager;
 
 final class ConnectionFactory
 {
-    private DatabaseUrl $databaseUrl;
+    private $databaseUrl;
 
     public function __construct(DatabaseUrl $databaseUrl)
     {

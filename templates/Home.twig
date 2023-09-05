@@ -9,26 +9,48 @@
 
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link btn btn-primary" href="/">Home</a>
+                <a class="nav-item nav-link btn btn-primary" href="/create_user">Create new user</a>
+                <a class="nav-item nav-link btn btn-primary" href="/logout" >Logout</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container-fluid">
-        <div class="col-sm-12 col-xs-12">
-            <table class="table table-dark table-striped">
+        {% if users is empty %}
+            <h4>
+                No records found...
+            </h4>
+        {% else %}
+            <table class="table  table-striped">
                 <tr>
-                    <th>Employee</th>
+                    <th>Users name</th>
                     <th>Login</th>
-                    <th>Password</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.login }}</td>
+                        <td>
+                            <a class="btn-info btn" href="/edit_user/{{ user.id }}">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn-info btn" href="/delete_user/{{ user.id }}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
             </table>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="col-sm-12 col-xs-12">
-            <form method="post" action="/">
-                <input type="hidden" name="logout" value="logout">
-                <button type="submit" class="btn btn-primary">
-                    Logout
-                </button>
-            </form>
-        </div>
+        {% endif %}
+
     </div>
 </body>
 </html>
