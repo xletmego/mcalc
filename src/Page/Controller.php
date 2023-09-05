@@ -45,7 +45,7 @@ final class Controller
         if($this->configuration->get('login') === $login && $this->configuration->get('password') === $password){
             $session = $request->getSession();
             $session->set('auth', true);
-            return (new RedirectResponse('/home'));
+            return $this->home($request);
         }
 
 
