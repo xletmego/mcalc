@@ -36,13 +36,8 @@ return array(
         'App\Page\Controller#save_user'
     ),
     array(
-        'GET',
-        '/api/{login}/{password}',
-        'App\Page\Controller#api'
-    ),
-    array(
-        'POST',
-        '/api/{login}/{password}',
+        ['GET','POST'],
+        '/api/[{login}[/{password}]]',
         'App\Page\Controller#api'
     ),
 );
