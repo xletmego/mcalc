@@ -34,7 +34,7 @@ class UsersDB
         $qb = $this->connection->createQueryBuilder();
         $result = $qb->select(array_keys(self::FIELDS))
             ->from(self::TABLE_NAME)
-            ->where('id', ':id')
+            ->where('id = :id')
             ->setParameter(':id', $id)
             ->execute()
             ->fetchAssociative();
@@ -49,10 +49,6 @@ class UsersDB
             ->from(self::TABLE_NAME)
             ->where('login = :login')
             ->andWhere('password = :password')
-//            ->andWhere([
-//
-//                'password' => ':password'
-//            ])
             ->setParameters([
                 ':login' => $login,
                 ':password' => $password
