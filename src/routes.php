@@ -37,7 +37,7 @@ return array(
     ),
     array(
         ['GET','POST'],
-        '/api[/{login}[/{password}]]',
+        '/api',
         'App\Page\Controller#api'
     ),
 );

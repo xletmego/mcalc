@@ -3,14 +3,16 @@
 namespace App\Page;
 
 use App\Configuration;
+use App\Data\Functions;
+use App\Data\FunctionSeeker;
 use App\Rendering\TemplateRenderer;
 use App\Storage\Users\UsersDB;
 use Doctrine\DBAL\Driver\Exception;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 final class Controller
 {
@@ -68,20 +70,41 @@ final class Controller
         return new Response($this->renderer->render('Home.twig',['users' => $this->user_table->getList()]));
     }
 
-    public function api(Request $request, $vars){
+    public function api(Request $request){
 
         $respArray = [
-            'found' => 0,
-            'param1' => 0,
-            'param2' => 0,
+            'validityIndicator' => 0,
+            'result' => 0,
+            'status' => 'error',
+            'statusCode' => 404,
         ];
-        $data = $this->user_table->find($vars['login'] ?? '', $vars['password'] ?? '');
-        if(!empty($data['id'])){
-            $respArray['found'] = 1;
-            $respArray['param1'] = 1;
-            $respArray['param2'] = 2;
+        $functionName = $request->get('funcName','');
 
+        if(empty($functionName)) {
+            $respArray['status'] = 'function not found';
+            return new Response(json_encode($respArray));
         }
+        $data = $this->user_table->find($request->get('login'), $request->get('password'));
+        if(empty($data['id'])){
+            $respArray['status'] = 'user not found';
+            return new Response(json_encode($respArray));
+        }
+        $respArray['validityIndicator'] = 1;
+
+        $fs = new FunctionSeeker($functionName);
+        $params = $fs->getParams();
+        foreach ($params as $name => $value){
+            $params[$name] = floatval($request->get($name, 0));
+        }
+
+        try {
+            $respArray['result'] = $fs->getResult($params);
+            $respArray['status'] = 'ok';
+            $respArray['statusCode'] = 200;
+        } catch (\Exception | \Error $e){
+            $respArray['status'] = 'function error';
+        }
+
         return new Response(json_encode($respArray));
     }
 
