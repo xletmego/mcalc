@@ -86,7 +86,7 @@ final class Controller
         }
         $respArray['validityIndicator'] = 1;
 
-        $functionName = $request->get('funcName','');
+        $functionName = strtolower($request->get('function',''));
 
         if(empty($functionName)) {
             $respArray['status'] = 'function not found';
