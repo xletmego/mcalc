@@ -14,8 +14,6 @@ class UsersDB
         'name' => 'varchar',
         'login' => 'varchar',
         'password' => 'varchar',
-        'param1' => 'int',
-        'param2' => 'int',
     ];
 
     private $connection;

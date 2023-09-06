@@ -13,14 +13,26 @@ class FunctionSeeker
         $this->name = $name;
     }
 
+    public function isExists():bool
+    {
+        $reflection = new ReflectionClass(Functions::class);
+        $classMethods = $reflection->getMethods();
+
+        foreach ($classMethods as $classMethod){
+            if($classMethod->name === $this->name){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function getParams(): array
     {
         $params = [];
+
         $reflection = new ReflectionClass(Functions::class);
-        if(!$reflection instanceof ReflectionClass) {
-            return $params;
-        }
         $method = $reflection->getMethod($this->name);
+
         if(!$method instanceof \ReflectionMethod){
             return $params;
         }

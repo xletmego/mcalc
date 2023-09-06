@@ -92,6 +92,10 @@ final class Controller
         $respArray['validityIndicator'] = 1;
 
         $fs = new FunctionSeeker($functionName);
+        if(!$fs->isExists()){
+            $respArray['status'] = 'function not found';
+            return new Response(json_encode($respArray));
+        }
         $params = $fs->getParams();
         foreach ($params as $name => $value){
             $params[$name] = floatval($request->get($name, 0));
@@ -148,8 +152,6 @@ final class Controller
             'name' => $request->get('name', 'unknown name'),
             'login' => $request->get('login', ''),
             'password' => $request->get('password', ''),
-            'param1' => $request->get('param1', 0),
-            'param2' => $request->get('param2', 0),
         ];
         $this->user_table->updateRecord($fields);
 
