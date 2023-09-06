@@ -78,18 +78,20 @@ final class Controller
             'status' => 'error',
             'statusCode' => 404,
         ];
-        $functionName = $request->get('funcName','');
 
-        if(empty($functionName)) {
-            $respArray['status'] = 'function not found';
-            return new Response(json_encode($respArray));
-        }
         $data = $this->user_table->find($request->get('login'), $request->get('password'));
         if(empty($data['id'])){
             $respArray['status'] = 'user not found';
             return new Response(json_encode($respArray));
         }
         $respArray['validityIndicator'] = 1;
+
+        $functionName = $request->get('funcName','');
+
+        if(empty($functionName)) {
+            $respArray['status'] = 'function not found';
+            return new Response(json_encode($respArray));
+        }
 
         $fs = new FunctionSeeker($functionName);
         if(!$fs->isExists()){
