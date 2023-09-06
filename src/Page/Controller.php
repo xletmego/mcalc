@@ -100,7 +100,9 @@ final class Controller
         }
         $params = $fs->getParams();
         foreach ($params as $name => $value){
-            $params[$name] = floatval($request->get($name, 0));
+            $params[$name] = $request->get($name, '');
+            $params[$name] = str_replace(',','.', $params[$name]);
+            $params[$name] = floatval($params[$name]);
         }
 
         try {
