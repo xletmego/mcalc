@@ -86,12 +86,7 @@ final class Controller
         }
         $respArray['validityIndicator'] = 1;
 
-        $functionName = strtolower($request->get('function',''));
-
-        if(empty($functionName)) {
-            $respArray['status'] = 'function not found';
-            return new Response(json_encode($respArray));
-        }
+        $functionName = 'nr' . $request->get('function','0');
 
         $fs = new FunctionSeeker($functionName);
         if(!$fs->isExists()){
